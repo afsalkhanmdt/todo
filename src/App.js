@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import getCall from "./Services/getCall";
 import postCall from "./Services/postCall";
+import deleteCall from "./Services/deleteCall";
 
 
 function App() {
@@ -29,6 +30,13 @@ function App() {
     })
   }
 
+  const deleteTodo=(Id)=>{
+    deleteCall("/todoes/"+Id)
+    .then(res=>{
+      getTodo()
+    })
+  }
+
   return (
 
 
@@ -39,7 +47,7 @@ function App() {
       <button onClick={saveTodo}>Add</button>
       <ul>
         {todo.map((data,i)=>
-        <li key={i}>{data.Text}</li>
+        <li onClick={()=>deleteTodo(data.Id)} key={i}>{data.Text}</li>
         )}
       </ul>
     </div>
