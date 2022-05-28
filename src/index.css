@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.App{
+display: grid;
+place-items: centre;
+max-width: 200px;
+margin: auto;
+gap: 10px;
+}
+button{
+  background-color: blue;
+  color:white;
+}

@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import getCall from "./Services/getCall";
+import postCall from "./Services/postCall";
+
 
 function App() {
+ const[todo,setTodo]=useState([]);
+ const[text,setText]=useState("");
+  
+ useEffect(() => {
+    getTodo()
+   }, []);
+
+  const getTodo=()=>{
+    getCall("/todoes")
+    .then(res=>{
+      setTodo(res)
+    })
+  }
+
+  const saveTodo=()=>{
+    postCall("/todoes",{
+      Text :text,
+      Done:false
+    })
+    .then(res=>{
+      getTodo()
+      setText("")
+    })
+  }
+
   return (
+
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <h1>Todo</h1>
+      <input type="text" onChange={(e)=>setText(e.target.value)} value={text}/>
+      <button onClick={saveTodo}>Add</button>
+      <ul>
+        {todo.map((data,i)=>
+        <li key={i}>{data.Text}</li>
+        )}
+      </ul>
     </div>
   );
 }
